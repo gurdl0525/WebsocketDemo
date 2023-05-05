@@ -54,6 +54,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+allOpen{
+    annotation("javax.persistence.Entity")
+}
+
+noArg{
+    annotation("javax.persistence.Entity")
 }
