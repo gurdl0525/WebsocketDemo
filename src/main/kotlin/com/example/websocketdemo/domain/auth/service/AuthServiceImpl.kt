@@ -11,8 +11,10 @@ import com.example.websocketdemo.global.common.UserFacade
 import com.example.websocketdemo.global.config.jwt.GenerateJwtAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class AuthServiceImpl(
     private val userRepository: UserRepository,
     private val passwordEncoder: BCryptPasswordEncoder,
@@ -20,9 +22,10 @@ class AuthServiceImpl(
     private val userFacade: UserFacade
 ): AuthService {
 
+    @Transactional
     override fun signUp(req: SignUpRequest) {
 
-        if(userRepository.existsByAccountId(req.accountId)){
+        if(userRepository.existsByAccountId(req.accountId!!)){
             throw DuplicatedAccountIdException
         }
 
@@ -35,7 +38,7 @@ class AuthServiceImpl(
     }
 
     override fun login(req: LoginRequest) =
-        if(userRepository.existsByAccountId(req.accountId)) {
+        if(userRepository.existsByAccountId(req.accountId!!)) {
             jwtProvider.receiveToken(req.accountId)
         }else{
             throw UserNotFoundException
