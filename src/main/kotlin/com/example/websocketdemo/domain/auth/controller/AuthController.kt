@@ -1,6 +1,8 @@
 package com.example.websocketdemo.domain.auth.controller
 
-import com.example.websocketdemo.domain.auth.controller.dto.SignUpRequest
+import com.example.websocketdemo.domain.auth.controller.dto.request.LoginRequest
+import com.example.websocketdemo.domain.auth.controller.dto.request.SignUpRequest
+import com.example.websocketdemo.domain.auth.controller.dto.response.TokenResponse
 import com.example.websocketdemo.domain.auth.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,4 +19,10 @@ class AuthController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun signUp(req: SignUpRequest) = authService.signUp(req)
+
+    @PostMapping("/login")
+    fun login(req: LoginRequest) = authService.login(req)
+
+    @PostMapping("/re-issue")
+    fun reissue() = authService.reissue()
 }
