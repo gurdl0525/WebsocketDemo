@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class UserFacade(
     private val userRepository: UserRepository
 ){
-    
+
     fun getUserByToken(): User {
 
         val authDetails = (SecurityContextHolder.getContext().authentication
