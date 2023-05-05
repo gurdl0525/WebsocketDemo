@@ -5,8 +5,8 @@ import javax.validation.constraints.NotBlank
 data class SignUpRequest(
 
     @field:NotBlank(message = "공백 불가")
-    val accountId: String,
+    val accountId: String?,
 
     @field:NotBlank(message = "공백 불가")
-    val password: String
+    val password: String?
 )
