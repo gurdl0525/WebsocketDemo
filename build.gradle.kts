@@ -17,14 +17,34 @@ repositories {
 }
 
 dependencies {
+
+    //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    //mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
+
+    //redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    //security
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    //web
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    //socket
     implementation("org.springframework.boot:spring-boot-starter-websocket")
+
+    //validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    //jwt
+    implementation("io.jsonwebtoken:jjwt:0.9.0")
+
+    //kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    runtimeOnly("com.mysql:mysql-connector-j")
 }
 
 tasks.withType<KotlinCompile> {
