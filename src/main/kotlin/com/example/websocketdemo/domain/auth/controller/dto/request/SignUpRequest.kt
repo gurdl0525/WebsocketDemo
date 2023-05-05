@@ -1,4 +1,4 @@
-package com.example.websocketdemo.domain.auth.controller.dto
+package com.example.websocketdemo.domain.auth.controller.dto.request
 
 import javax.validation.constraints.NotBlank
 
