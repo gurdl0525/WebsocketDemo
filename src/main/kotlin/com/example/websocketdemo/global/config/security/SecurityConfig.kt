@@ -32,7 +32,7 @@ class SecurityConfig(
             .and()
 
             .authorizeHttpRequests()
-            .antMatchers("/auth/re-issue").authenticated()
+            .antMatchers("/**").permitAll()
             .anyRequest().permitAll()
 
             .and().apply(FilterConfig(objectMapper, jwtTokenParser, jwtTokenResolver))
