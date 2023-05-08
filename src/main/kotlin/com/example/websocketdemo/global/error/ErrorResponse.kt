@@ -1,6 +1,7 @@
 package com.example.websocketdemo.global.error
 
 import org.springframework.http.HttpStatus
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
 import org.springframework.validation.FieldError
 
@@ -28,5 +29,11 @@ data class ErrorResponse(
 
             return BindErrorResponse(HttpStatus.BAD_REQUEST, listOf(errorMap))
         }
+
+        fun of(e: HttpMessageNotReadableException) = ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            e.httpInputMessage.toString(),
+            e.message ?: e.localizedMessage
+        )
     }
 }
