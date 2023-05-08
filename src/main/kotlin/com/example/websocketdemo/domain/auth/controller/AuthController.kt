@@ -1,6 +1,7 @@
 package com.example.websocketdemo.domain.auth.controller
 
 import com.example.websocketdemo.domain.auth.controller.dto.request.LoginRequest
+import com.example.websocketdemo.domain.auth.controller.dto.request.ReissueRequest
 import com.example.websocketdemo.domain.auth.controller.dto.request.SignUpRequest
 import com.example.websocketdemo.domain.auth.service.AuthService
 import org.springframework.http.HttpStatus
@@ -33,5 +34,8 @@ class AuthController(
     ) = authService.login(req)
 
     @PostMapping("/re-issue")
-    fun reissue() = authService.reissue()
+    fun reissue(
+        @Valid @RequestBody
+        req: ReissueRequest
+    ) = authService.reissue(req)
 }
