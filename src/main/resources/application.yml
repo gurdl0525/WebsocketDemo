@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -28,6 +28,6 @@ server:
   port: ${SERVER_PORT:8080}
 
 jwt:
-  secretKey: ${SECRET_KEY:!*!$Y&*&%@&^$@*@*&}
+  secretKey: ${SECRET_KEY:askjfnaskfno12840148}
   accessExp: 1470
   refreshExp: 7400
