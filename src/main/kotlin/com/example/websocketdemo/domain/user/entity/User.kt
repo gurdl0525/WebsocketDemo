@@ -1,7 +1,9 @@
 package com.example.websocketdemo.domain.user.entity
 
-import java.util.UUID
+import com.example.websocketdemo.domain.chat.entity.Chat
+import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 @Entity(name = "user")
 class User(
@@ -21,5 +23,9 @@ class User(
 
     @Column(name = "password", length = 60, nullable = false)
     var password: String = password
+        protected set
+
+    @OneToMany(mappedBy = "target", cascade = [CascadeType.REMOVE])
+    var chatList: MutableList<Chat> = ArrayList()
         protected set
 }
