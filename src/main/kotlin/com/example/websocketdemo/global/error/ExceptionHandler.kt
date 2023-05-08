@@ -25,9 +25,9 @@ class ExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
-    protected fun handleHttpMessageNotReadable(e: HttpMessageNotReadableException) = ErrorResponse(
-        HttpStatus.BAD_REQUEST.value(),
-        e.httpInputMessage.toString(),
-        e.message ?: e.localizedMessage
-    )
+    protected fun handleHttpMessageNotReadable(e: HttpMessageNotReadableException) =
+        ResponseEntity(
+            ErrorResponse.of(e),
+            HttpStatus.BAD_REQUEST
+        )
 }
