@@ -34,7 +34,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     //socket
-    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("com.corundumstudio.socketio:netty-socketio:1.7.19")
 
     //validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
