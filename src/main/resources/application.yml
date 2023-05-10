@@ -13,12 +13,14 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
         show_sql: true
         use_sql_comments: true
+    database: ${DATABASE:mysql}
+    open-in-view: false
 
   redis:
     host: ${REDIS_HOST:localhost}
@@ -29,5 +31,8 @@ server:
 
 jwt:
   secretKey: ${SECRET_KEY:askjfnaskfno12840148}
-  accessExp: 1470
-  refreshExp: 7400
+  accessExp: ${ACCESS_EXP:1470}
+  refreshExp: ${REFRESH_EXP:7400}
+
+socket:
+  port: ${SOCKET_PORT:8081}
