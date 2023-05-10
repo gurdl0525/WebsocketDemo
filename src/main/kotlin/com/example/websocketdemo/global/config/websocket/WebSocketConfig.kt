@@ -1,16 +1,33 @@
 package com.example.websocketdemo.global.config.websocket
 
+import com.corundumstudio.socketio.SocketIOServer
+import com.corundumstudio.socketio.annotation.SpringAnnotationScanner
+import com.example.websocketdemo.global.config.websocket.listener.SocketExceptionListener
+import com.example.websocketdemo.global.config.websocket.property.SocketProperty
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer
 
 @Configuration
-@EnableWebSocketMessageBroker
-class WebSocketConfig: WebSocketMessageBrokerConfigurer {
+class WebSocketConfig(
+    private val property: SocketProperty
+) {
 
-    override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS()
+    @Bean
+    fun socketIOServer(): SocketIOServer {
+
+        val socketConfig = com.corundumstudio.socketio.SocketConfig()
+        socketConfig.isReuseAddress = true
+
+        val configuration = com.corundumstudio.socketio.Configuration();
+        configuration.port = property.port
+        configuration.origin = "*";
+        configuration.socketConfig = socketConfig;
+        configuration.exceptionListener = SocketExceptionListener();
+
+        return SocketIOServer(configuration);
     }
+
+    @Bean
+    fun springAnnotationScanner(socketIOServer: SocketIOServer) = SpringAnnotationScanner(socketIOServer)
 
 }
