@@ -22,13 +22,9 @@ class UserFacade(
 
         val userName: String = authentication.name
 
-        return findByAccountId(userName) ?: throw UnAuthorizedException
+        return userRepository.findByAccountId(userName) ?: throw UnAuthorizedException
     }
 
     fun getCurrentUser(socketIOClient: SocketIOClient) = userRepository.findByIdOrNull(SocketUtil.getUserId(socketIOClient))
         ?: throw UnAuthorizedException
-
-    fun getUserByAccountId(accountId: String) = findByAccountId(accountId) ?: throw UserNotFoundException
-
-    private fun findByAccountId(accountId: String) = userRepository.findByAccountId(accountId)
 }
