@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -35,4 +35,4 @@ jwt:
   refreshExp: ${REFRESH_EXP:7400}
 
 socket:
-  port: ${SOCKET_PORT:8081}
+  port: ${SOCKET_PORT:3000}
