@@ -3,7 +3,7 @@ package com.example.websocketdemo.global.config.websocket.util
 import com.corundumstudio.socketio.SocketIOClient
 import com.example.websocketdemo.global.config.websocket.property.ClientProperties
 import com.example.websocketdemo.global.exception.InvalidUserException
-import com.example.websocketdemo.global.exception.RoomNotFoundException
+import com.example.websocketdemo.domain.chat.exception.RoomNotFoundException
 import java.util.UUID
 
 
