@@ -2,10 +2,11 @@ package com.example.websocketdemo.domain.chat.service
 
 import com.example.websocketdemo.domain.chat.controller.dto.response.QueryRoomListResponse
 import com.example.websocketdemo.domain.chat.controller.dto.response.RoomResponse
+import com.example.websocketdemo.domain.chat.exception.RoomNotFoundException
 import com.example.websocketdemo.domain.chat.repository.RoomUserRepository
 import com.example.websocketdemo.domain.user.entity.User
 import com.example.websocketdemo.domain.user.facade.UserFacade
-import com.example.websocketdemo.global.exception.RoomUserNotFoundException
+import com.example.websocketdemo.domain.chat.exception.RoomUserNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,7 +21,8 @@ class QueryMyRoomListServiceImpl(
         val user: User = userFacade.getCurrentUser()
 
         val roomUserList  = roomUserRepository.findAllByUser(user)
-            ?: throw RoomUserNotFoundException
+
+        if (roomUserList.isNullOrEmpty()) throw RoomNotFoundException
 
         return QueryRoomListResponse(
             roomUserList
