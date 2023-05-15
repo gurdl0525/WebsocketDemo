@@ -4,7 +4,7 @@ import com.corundumstudio.socketio.SocketIOClient
 import com.example.websocketdemo.domain.chat.entity.Room
 import com.example.websocketdemo.domain.chat.repository.RoomRepository
 import com.example.websocketdemo.global.config.websocket.util.SocketUtil
-import com.example.websocketdemo.global.exception.RoomNotFoundException
+import com.example.websocketdemo.domain.chat.exception.RoomNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import java.util.*
