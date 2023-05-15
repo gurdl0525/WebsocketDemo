@@ -7,7 +7,8 @@ import com.example.websocketdemo.global.error.ErrorCode
 import com.example.websocketdemo.global.error.ErrorResponse
 import com.example.websocketdemo.global.exception.BusinessException
 import io.netty.channel.ChannelHandlerContext
-import java.util.*
+import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.validation.BindException
 
 
 class SocketExceptionListener: ExceptionListener {
@@ -33,22 +34,15 @@ class SocketExceptionListener: ExceptionListener {
 
     private fun runExceptionHandling(e: Exception, client: SocketIOClient) {
 
-        val errorCode: ErrorCode
-
-        println(e.cause)
-        println(e.message)
-        println(e.javaClass)
-        println(e.cause!!.message)
-
-        Arrays.stream(e.cause!!.stackTrace).forEach(System.out::println)
-
-        if (e.cause is BusinessException) {
-            errorCode = (e.cause as BusinessException).errorCode
-        } else {
-            errorCode = ErrorCode.INTERNAL_SERVER_ERROR
+        val message = when(e.cause) {
+            is BusinessException -> ErrorResponse.of((e.cause as BusinessException).errorCode)
+            is BindException -> ErrorResponse.of(e.cause as BindException)
+            is HttpMessageNotReadableException -> ErrorResponse.of(e.cause as HttpMessageNotReadableException)
+            else -> ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR)
         }
 
-        val message: ErrorResponse = ErrorResponse.of(errorCode)
+        e.cause?.printStackTrace()
+
         client.sendEvent(SocketProperties.ERROR, message)
     }
 
