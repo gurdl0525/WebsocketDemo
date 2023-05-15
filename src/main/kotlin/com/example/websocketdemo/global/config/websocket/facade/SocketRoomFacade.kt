@@ -2,6 +2,7 @@ package com.example.websocketdemo.global.config.websocket.facade
 
 import com.corundumstudio.socketio.SocketIOClient
 import com.example.websocketdemo.domain.chat.entity.Room
+import com.example.websocketdemo.domain.chat.exception.RoomUserNotFoundException
 import com.example.websocketdemo.domain.chat.facade.RoomFacade
 import com.example.websocketdemo.domain.chat.facade.RoomUserFacade
 import com.example.websocketdemo.domain.user.entity.User
@@ -22,7 +23,9 @@ class SocketRoomFacade(
 
         val roomUserList = roomUserFacade.getListByUser(user)
 
-        roomUserList!!
+        if (roomUserList.isNullOrEmpty()) throw RoomUserNotFoundException
+
+        roomUserList
             .map { socketIOClient.joinRoom(String.valueOf(it.room.id)) }
             .toList()
     }
@@ -34,7 +37,7 @@ class SocketRoomFacade(
         roomUserFacade.checkRoomUserExist(room, user)
 
         socketIOClient.let {
-            it.allRooms.forEach(Consumer { room: kotlin.String? -> socketIOClient.leaveRoom(room) })
+            it.allRooms.forEach { room ->  socketIOClient.leaveRoom((room)) }
             it[ClientProperties.ROOM_KEY] = roomId
             it.joinRoom(String.valueOf(roomId))
         }
