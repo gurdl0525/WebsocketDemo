@@ -5,7 +5,6 @@ import com.corundumstudio.socketio.SocketIOServer
 import com.corundumstudio.socketio.annotation.OnEvent
 import com.example.websocketdemo.domain.chat.controller.dto.request.JoinSocketRoomRequest
 import com.example.websocketdemo.domain.chat.controller.dto.request.SendChatRequest
-import com.example.websocketdemo.domain.chat.service.socket.SendChatServiceV2
 import com.example.websocketdemo.domain.chat.service.socket.JoinSocketRoomService
 import com.example.websocketdemo.domain.chat.service.socket.SendChatService
 import com.example.websocketdemo.global.config.websocket.property.SocketProperties
@@ -15,13 +14,11 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
-
 @RestController
 class ChatSocketController(
     private val socketIOServer: SocketIOServer,
     private val sendChatService: SendChatService,
     private val joinSocketRoomService: JoinSocketRoomService,
-    private val sendChatServiceV2: SendChatServiceV2,
 ) {
 
     @OnEvent(SocketProperties.CHAT)
@@ -41,16 +38,5 @@ class ChatSocketController(
         request: JoinSocketRoomRequest
     ) {
         joinSocketRoomService.execute(socketIOClient, request)
-    }
-
-
-
-    @OnEvent(SocketProperties.CHAT + "2")
-    fun sendChatV2(
-        socketIOClient: SocketIOClient,
-        @Valid @RequestBody
-        request: SendChatRequest
-    ) {
-        sendChatServiceV2.execute(socketIOServer, socketIOClient, request)
     }
 }
