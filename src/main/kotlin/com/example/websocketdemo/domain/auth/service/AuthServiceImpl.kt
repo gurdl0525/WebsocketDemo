@@ -5,6 +5,7 @@ import com.example.websocketdemo.domain.auth.controller.dto.request.ReissueReque
 import com.example.websocketdemo.domain.auth.controller.dto.request.SignUpRequest
 import com.example.websocketdemo.domain.auth.controller.dto.response.TokenResponse
 import com.example.websocketdemo.domain.auth.exception.DuplicatedAccountIdException
+import com.example.websocketdemo.domain.auth.exception.PasswordMismatchedException
 import com.example.websocketdemo.domain.auth.repository.RefreshTokenRepository
 import com.example.websocketdemo.domain.user.entity.User
 import com.example.websocketdemo.domain.user.exception.UserNotFoundException
@@ -40,12 +41,16 @@ class AuthServiceImpl(
     }
 
     @Transactional
-    override fun login(req: LoginRequest) =
-        if(userRepository.existsByAccountId(req.accountId!!)) {
-            jwtProvider.receiveToken(req.accountId)
-        }else{
-            throw UserNotFoundException
-        }
+    override fun login(req: LoginRequest): TokenResponse {
+
+        val user = userRepository.findByAccountId(req.accountId!!)
+            ?: throw UserNotFoundException
+
+        if(!passwordEncoder.matches(req.password, user.password)) throw PasswordMismatchedException
+
+        return jwtProvider.receiveToken(req.accountId)
+    }
+
 
     @Transactional
     override fun reissue(req: ReissueRequest): TokenResponse {
