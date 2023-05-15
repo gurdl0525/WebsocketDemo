@@ -6,6 +6,7 @@ import com.example.websocketdemo.global.config.websocket.listener.SocketExceptio
 import com.example.websocketdemo.global.config.websocket.property.SocketProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import com.corundumstudio.socketio.SocketConfig
 
 @Configuration
 class WebSocketConfig(
@@ -15,14 +16,17 @@ class WebSocketConfig(
     @Bean
     fun socketIOServer(): SocketIOServer {
 
-        val socketConfig = com.corundumstudio.socketio.SocketConfig()
+        val socketConfig = SocketConfig()
         socketConfig.isReuseAddress = true
 
-        val configuration = com.corundumstudio.socketio.Configuration();
-        configuration.port = property.port
-        configuration.origin = "*";
-        configuration.socketConfig = socketConfig;
-        configuration.exceptionListener = SocketExceptionListener();
+        val configuration = com.corundumstudio.socketio.Configuration()
+
+        configuration.let {
+            it.port = property.port
+            it.origin = "*";
+            it.socketConfig = socketConfig;
+            it.exceptionListener = SocketExceptionListener()
+        }
 
         return SocketIOServer(configuration);
     }
