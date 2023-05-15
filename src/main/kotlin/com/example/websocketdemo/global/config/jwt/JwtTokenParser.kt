@@ -37,7 +37,7 @@ class JwtTokenParser(
 
         val subject = getSubject(token)
 
-        val authDetails = authDetailsService.loadUserByUsername(subject) as AuthDetails
+        val authDetails = authDetailsService.loadUserByUsername(subject)
 
         return UsernamePasswordAuthenticationToken(authDetails, "", authDetails.authorities)
     }
