@@ -4,7 +4,7 @@ import com.example.websocketdemo.domain.chat.entity.Room
 import com.example.websocketdemo.domain.chat.entity.RoomUser
 import com.example.websocketdemo.domain.chat.repository.RoomUserRepository
 import com.example.websocketdemo.domain.user.entity.User
-import com.example.websocketdemo.global.exception.RoomUserNotFoundException
+import com.example.websocketdemo.domain.chat.exception.RoomUserNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import java.util.*
