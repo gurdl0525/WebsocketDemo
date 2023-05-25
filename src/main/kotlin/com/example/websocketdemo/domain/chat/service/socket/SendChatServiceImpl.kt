@@ -26,7 +26,7 @@ class SendChatServiceImpl(
     @Transactional
     override fun execute(socketIOServer: SocketIOServer, socketIOClient: SocketIOClient, request: SendChatRequest) {
 
-        val user = userFacade.getCurrentUser(socketIOClient)
+        val user = userFacade.getUserBySocketClient(socketIOClient)
         val room = roomFacade.getCurrentRoom(socketIOClient)
 
         val roomUser = roomUserFacade.getById(room.id!!, user.id!!)
