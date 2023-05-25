@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface RoomUserRepository: JpaRepository<RoomUser, RoomUser.RoomUserIdClass> {
 
-    fun findAllByUser(user: User): List<RoomUser>?
+    fun findByUser(user: User): MutableList<RoomUser>
 }
