@@ -1,16 +1,13 @@
 package com.example.websocketdemo.domain.chat.controller.dto.request
 
-import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.UUID
+import java.util.*
 import javax.validation.constraints.NotNull
 
 data class JoinSocketRoomRequest(
 
-    @JsonProperty("is_join_room")
-    @field:NotNull
+    @field:NotNull(message = "공백 불가")
     val isJoinRoom: Boolean,
 
-    @JsonProperty("room_id")
-    @field:NotNull
+    @field:NotNull(message = "공백 불가")
     val roomId: UUID,
 )
