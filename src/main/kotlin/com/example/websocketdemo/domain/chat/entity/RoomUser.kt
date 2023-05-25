@@ -22,7 +22,7 @@ class RoomUser(
         protected set
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room", nullable = false)
     var room: Room = room
         protected set
