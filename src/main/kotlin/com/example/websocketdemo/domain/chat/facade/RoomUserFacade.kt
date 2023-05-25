@@ -20,7 +20,7 @@ class RoomUserFacade(
     fun getById(roomUserId: RoomUser.RoomUserIdClass) = roomUserRepository.findByIdOrNull(roomUserId)
         ?: throw RoomUserNotFoundException
 
-    fun getListByUser(user: User): List<RoomUser>? = roomUserRepository.findAllByUser(user)
+    fun getListByUser(user: User): List<RoomUser>? = roomUserRepository.findByUser(user)
 
     fun checkRoomUserExist(room: Room, user: User) {
         roomUserRepository.findByIdOrNull(RoomUser.RoomUserIdClass(room.id, user.id)) ?: throw RoomUserNotFoundException
