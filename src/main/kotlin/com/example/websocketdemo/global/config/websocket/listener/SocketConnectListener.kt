@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component
 @Component
 class SocketConnectListener(
     private val socketRoomFacade: SocketRoomFacade,
-    private val userFacade: UserFacade
+    private val userFacade: UserFacade,
 ){
 
     @OnConnect
     fun onConnect(socketIOClient: SocketIOClient) {
 
-        val user: User = userFacade.getCurrentUser()
+        val user: User = userFacade.getCurrentUser(socketIOClient)
 
         socketIOClient.set(ClientProperties.USER_KEY, user.id)
 
