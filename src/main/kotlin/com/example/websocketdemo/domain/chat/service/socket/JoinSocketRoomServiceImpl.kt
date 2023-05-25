@@ -15,7 +15,7 @@ class JoinSocketRoomServiceImpl(
 
     override fun execute(socketIOClient: SocketIOClient, request: JoinSocketRoomRequest) {
 
-        val user: User = userFacade.getCurrentUser(socketIOClient)
+        val user: User = userFacade.getUserBySocketClient(socketIOClient)
 
         if (request.isJoinRoom) {
             val roomId = request.roomId
