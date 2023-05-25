@@ -8,7 +8,6 @@ import com.example.websocketdemo.domain.chat.facade.RoomUserFacade
 import com.example.websocketdemo.domain.chat.repository.ChatRepository
 import com.example.websocketdemo.domain.user.entity.User
 import com.example.websocketdemo.domain.user.facade.UserFacade
-import com.example.websocketdemo.global.exception.InternalServerErrorException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
