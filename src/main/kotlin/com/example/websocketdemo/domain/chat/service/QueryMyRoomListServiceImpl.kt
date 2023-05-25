@@ -6,7 +6,6 @@ import com.example.websocketdemo.domain.chat.exception.RoomNotFoundException
 import com.example.websocketdemo.domain.chat.repository.RoomUserRepository
 import com.example.websocketdemo.domain.user.entity.User
 import com.example.websocketdemo.domain.user.facade.UserFacade
-import com.example.websocketdemo.domain.chat.exception.RoomUserNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -18,17 +17,21 @@ class QueryMyRoomListServiceImpl(
 
     @Transactional(readOnly = true)
     override fun execute(): QueryRoomListResponse {
+
         val user: User = userFacade.getCurrentUser()
 
-        val roomUserList  = roomUserRepository.findAllByUser(user)
+        val roomUserList  = roomUserRepository.findByUser(user)
 
-        if (roomUserList.isNullOrEmpty()) throw RoomNotFoundException
-
-        return QueryRoomListResponse(
-            roomUserList
-                .map(RoomResponse::of)
-                .sortedBy { it.lastChat.lastSentAt }
-                .toList()
-        )
+        if (roomUserList.isNullOrEmpty()) {
+            throw RoomNotFoundException
+        }
+        else {
+            return QueryRoomListResponse(
+                roomUserList
+                    .map(RoomResponse::of)
+                    .sortedBy { it.lastChat.lastSentAt }
+                    .toList()
+            )
+        }
     }
 }
