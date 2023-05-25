@@ -28,6 +28,12 @@ class Room(
     var lastChat: LastChat = LastChat()
         protected set
 
+    @Embeddable
+    class LastChat {
+        var lastMessage = ""
+        var lastSentAt: LocalDateTime = DateUtil.getZonedNow()
+    }
+
     fun updateLastMessage(chat: Chat) {
         lastChat.lastMessage = chat.message
         lastChat.lastSentAt = chat.createdAt
@@ -42,10 +48,11 @@ class Room(
         return if (user1 !== user) user1 else user2
     }
 
-    @Embeddable
-    class LastChat {
-        var lastMessage = ""
-        var lastSentAt: LocalDateTime = DateUtil.getZonedNow()
+    fun addRoomUser(user: User) {
+        this.roomUsers.add(RoomUser(
+            user,
+            this
+        ))
     }
 
 
